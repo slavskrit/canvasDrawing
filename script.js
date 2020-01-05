@@ -33,6 +33,20 @@ function openLink(link) {
 	window.open(link);
 }
 
+{/* <li class="thumb"><img type="image" image="i/1.jpg" src="i/1-small.jpg"></li> */ }
+function appendImages() {
+	images.forEach(i => {
+		var li = document.createElement("li");
+		var img = new Image();
+		img.src = i.p;
+		img.setAttribute("type", "image");
+		img.setAttribute("image", i.f);
+		li.appendChild(img);
+		li.classList.add("thumb");
+		wall.appendChild(li);
+	});
+}
+
 function loadImages() {
 	var xhr = new XMLHttpRequest();
 	xhr.open("GET", 'https://api.github.com/repos/dpronin/pronind/contents/i', true);
@@ -40,12 +54,13 @@ function loadImages() {
 		if (xhr.readyState === 4) {
 			if (xhr.status === 200) {
 				var json = JSON.parse(xhr.responseText);
-				json.map((e) => e.name.cimages.push(e.path))
-				console.log(myArr);
+				console.log(json);
+				images = json.map((e) => !e.name.endsWith("s.jpg") ? { p: e.html_url.replace(".jpg", "s.jpg"), f: e.html_url } : {}).filter(value => Object.keys(value).length !== 0)
+				appendImages();
 			} else {
 				console.error(xhr.statusText);
 			}
 		}
 	};
-	xhr.send(null); 
+	xhr.send(null);
 }
