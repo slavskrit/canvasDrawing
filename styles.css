@@ -115,7 +115,7 @@ path, circle {
 /* Extra large devices (large laptops and desktops, 1200px and up) */
 @media only screen and (min-width: 1200px) { 
 	.thumb img,  .thumb span {
-		width: 20vw;
-		height: 20vw;
+		width: 10vw;
+		height: 10vw;
 	}
 }
