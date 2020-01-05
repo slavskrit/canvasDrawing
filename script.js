@@ -1,5 +1,6 @@
 var wall = document.getElementById("wall");
 wall.addEventListener('click', (e) => tileClickHandler(e.target));
+var images = [];
 loadImages();
 
 function tileClickHandler(tile) {
@@ -20,8 +21,8 @@ function tileClickHandler(tile) {
 function openImage(image) {
 	var overlay = document.createElement('div');
 	overlay.classList.add("overlay");
-	var img = new Image(); 
-	img.src = image; 
+	var img = new Image();
+	img.src = image;
 	overlay.appendChild(img);
 	img.classList.add("preview");
 	overlay.addEventListener('click', () => overlay.parentNode.removeChild(overlay));
@@ -33,8 +34,18 @@ function openLink(link) {
 }
 
 function loadImages() {
-	fetch('https://api.github.com/repos/dpronin/pronind/contents/i')
-	.then((response) => {
-		console.log(response);
-	})
+	var xhr = new XMLHttpRequest();
+	xhr.open("GET", 'https://api.github.com/repos/dpronin/pronind/contents/i', true);
+	xhr.onload = function (e) {
+		if (xhr.readyState === 4) {
+			if (xhr.status === 200) {
+				var json = JSON.parse(xhr.responseText);
+				json.map((e) => e.name.cimages.push(e.path))
+				console.log(myArr);
+			} else {
+				console.error(xhr.statusText);
+			}
+		}
+	};
+	xhr.send(null); 
 }
