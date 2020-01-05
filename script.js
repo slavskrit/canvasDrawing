@@ -55,7 +55,7 @@ function loadImages() {
 			if (xhr.status === 200) {
 				var json = JSON.parse(xhr.responseText);
 				console.log(json);
-				images = json.map((e) => !e.name.endsWith("s.jpg") ? { p: e.html_url.replace(".jpg", "s.jpg"), f: e.html_url } : {}).filter(value => Object.keys(value).length !== 0)
+				images = json.map((e) => !e.name.endsWith("s.jpg") ? { p: e.download_url.replace(".jpg", "s.jpg"), f: e.download_url } : {}).filter(value => Object.keys(value).length !== 0)
 				appendImages();
 			} else {
 				console.error(xhr.statusText);
