@@ -1,5 +1,6 @@
 var wall = document.getElementById("wall");
 wall.addEventListener('click', (e) => tileClickHandler(e.target));
+loadImages();
 
 function tileClickHandler(tile) {
 	console.log(0);
@@ -28,5 +29,12 @@ function openImage(image) {
 }
 
 function openLink(link) {
-	window.open(url);
+	window.open(link);
+}
+
+function loadImages() {
+	fetch('https://api.github.com/repos/dpronin/pronind/contents/i')
+	.then((response) => {
+		console.log(response);
+	})
 }
