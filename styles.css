@@ -21,7 +21,7 @@ body {
 	float: left;
 }
 
-.thumb span {
+.thumb div {
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -34,16 +34,6 @@ body {
 	filter: grayscale(0%);
 }
 
-.logo {
-	width: auto;
-    height: 15vh;
-    position: fixed;
-    z-index: 10;
-    top: 50%;
-	left: 0;
-	color: wheat;
-}
-
 path, circle {
 	fill-rule: nonzero;
 	stroke: #fff;
@@ -54,7 +44,7 @@ path, circle {
 
 .overlay {
 	background-color: rgba(0,0,0,.8);
-	position: absolute;
+	position: fixed;
 	top: 0;
 	left: 0;
 	display: flex;
@@ -68,6 +58,9 @@ path, circle {
 	width: 90vw;
 }
 
+.hidden {
+	display: none;
+}
 
 @keyframes dash {
 	0%, 90%, 100% {
@@ -82,7 +75,7 @@ path, circle {
 
 /* Extra small devices (phones, 600px and down) */
 @media only screen and (max-width: 600px) {
-	.thumb img,  .thumb span {
+	.thumb img,  .thumb div {
 		width: calc(100vw  /3);
 		height: calc(100vw  /3);
 	}
@@ -90,7 +83,7 @@ path, circle {
 
 /* Small devices (portrait tablets and large phones, 600px and up) */
 @media only screen and (min-width: 600px) {
-	.thumb img,  .thumb span {
+	.thumb img,  .thumb div {
 		width: 25vw;
 		height: 25vw;
 	}
@@ -98,7 +91,7 @@ path, circle {
 
 /* Medium devices (landscape tablets, 768px and up) */
 @media only screen and (min-width: 768px) { 
-	.thumb img,  .thumb span {
+	.thumb img,  .thumb div {
 		width: 25vw;
 		height: 25vw;
 	}
@@ -106,7 +99,7 @@ path, circle {
 
 /* Large devices (laptops/desktops, 992px and up) */
 @media only screen and (min-width: 992px) { 
-	.thumb img,  .thumb span {
+	.thumb img,  .thumb div {
 		width: 20vw;
 		height: 20vw;
 	}
@@ -114,7 +107,7 @@ path, circle {
 
 /* Extra large devices (large laptops and desktops, 1200px and up) */
 @media only screen and (min-width: 1200px) { 
-	.thumb img,  .thumb span {
+	.thumb img,  .thumb div {
 		width: 10vw;
 		height: 10vw;
 	}
