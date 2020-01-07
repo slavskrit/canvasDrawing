@@ -38,7 +38,7 @@ function addTiles() {
 	while (images.length > 0 || sqaures.length > 0) {
 		var li = document.createElement("li");
 		li.classList.add("thumb");
-		if (counter % 3 == 0) {
+		if (counter % 3 == 0 || images.length == 0) {
 			var div = document.createElement('div');
 			div.innerHTML = sqaures.pop().trim();
 			li.appendChild(div);
@@ -62,7 +62,7 @@ function loadImages() {
 		if (xhr.readyState === 4) {
 			if (xhr.status === 200) {
 				var json = JSON.parse(xhr.responseText);
-				images = json.filter((e) => e.type === "file").map((e) => { return { p: e.html_url, f: e.html_url.replace("/i/", "/i/f") } })
+				images = json.filter((e) => e.type === "file").map((e) => { return { p: e.html_url, f: e.html_url.replace("/i/", "/i/f/") } })
 				console.log(json);
 				addTiles();
 			} else {
