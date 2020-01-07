@@ -1,2 +1,7 @@
-convert -define jpeg:size=200x200 $1.jpeg  -thumbnail 100x100^ \
-          -gravity center -extent 100x100 ../$1.jpeg
+for f in *.jpeg; 
+do 
+echo "Processing $f file.."; 
+convert -define jpeg:size=200x200 $f  -thumbnail 100x100^ \
+          -gravity center -extent 200x200 ../$f
+done
+
