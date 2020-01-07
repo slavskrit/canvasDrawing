@@ -38,7 +38,7 @@ function addTiles() {
 	while (images.length > 0 || sqaures.length > 0) {
 		var li = document.createElement("li");
 		li.classList.add("thumb");
-		if (counter % 3 == 0 || images.length == 0) {
+		if ((counter % 3 == 0 || images.length == 0) && sqaures.length > 0) {
 			var div = document.createElement('div');
 			div.innerHTML = sqaures.pop().trim();
 			li.appendChild(div);
