@@ -62,7 +62,7 @@ function loadImages() {
 		if (xhr.readyState === 4) {
 			if (xhr.status === 200) {
 				var json = JSON.parse(xhr.responseText);
-				images = json.filter((e) => e.type === "file").map((e) => { return { p: e.html_url, f: e.html_url.replace("/i/", "/i/f/") } })
+				images = json.filter((e) => e.type === "file").map((e) => { return { p: e.download_url, f: e.download_url.replace("/i/", "/i/f/") } })
 				console.log(json);
 				addTiles();
 			} else {
