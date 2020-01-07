@@ -181,7 +181,7 @@ function addTiles() {
 		li.classList.add("thumb");
 		if (counter % 3 == 0 && sqaures.length > 0) {
 			var div = document.createElement('div');
-  			div.innerHTML = sqaures.pop().trim();
+			div.innerHTML = sqaures.pop().trim();
 			li.appendChild(div);
 		} else {
 			var img = new Image();
@@ -197,13 +197,13 @@ function addTiles() {
 
 function loadImages() {
 	var xhr = new XMLHttpRequest();
-	xhr.open("GET", 'https://api.github.com/repos/dpronin/pronind/contents/i', true);
+	xhr.open("GET", 'https://api.github.com/repos/dpronin/pronind/contents/i/p', true);
 	xhr.onload = function (e) {
 		if (xhr.readyState === 4) {
 			if (xhr.status === 200) {
 				var json = JSON.parse(xhr.responseText);
 				console.log(json);
-				images = json.map((e) => !e.name.endsWith("s.jpeg") ? { p: e.download_url.replace(".jpg", "s.jpg"), f: e.download_url } : {}).filter(value => Object.keys(value).length !== 0)
+				images = json.map((e) => { p: e.download_url.replace(".jpg", "s.jpg"), f: e.download_url } : {}).filter(value => Object.keys(value).length !== 0)
 				addTiles();
 			} else {
 				console.error(xhr.statusText);
