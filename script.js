@@ -1,4 +1,78 @@
-var wall = document.getElementById("wall");
+var wall = document.getElementById("wall");;
+wall.addEventListener('click', (e) => tileClickHandler(e.target));
+var images = [];
+document.cookie = "AC-C=ac-c;expires=Fri, 31 Dec 9999 23:59:59 GMT;path=/;SameSite=Lax";
+loadImages();
+
+function tileClickHandler(tile) {
+	var type = tile.getAttribute('type');
+	switch (type) {
+		case "image":
+			openImage(tile.getAttribute('image'));
+			break;
+		case "link":
+			openLink(tile.getAttribute('url'));
+			break;
+		default:
+			console.log('not implemented');
+	}
+}
+
+function openImage(image) {
+	var overlay = document.createElement('div');
+	overlay.classList.add("overlay");
+	var img = new Image();
+	img.src = image;
+	overlay.appendChild(img);
+	img.classList.add("preview");
+	overlay.addEventListener('click', () => overlay.parentNode.removeChild(overlay));
+	document.body.appendChild(overlay);
+}
+
+function openLink(link) {
+	window.open(link);
+}
+
+function addTiles() {
+	var counter = 0;
+	while (images.length > 0 || sqaures.length > 0) {
+		var li = document.createElement("li");
+		li.classList.add("thumb");
+		if (counter % 3 == 0) {
+			var div = document.createElement('div');
+			div.innerHTML = sqaures.pop().trim();
+			li.appendChild(div);
+		} else {
+			var img = new Image();
+			var image = images.pop();
+			img.src = image.p;
+			img.setAttribute("type", "image");
+			img.setAttribute("image", image.f);
+			li.appendChild(img);
+		}
+		wall.appendChild(li);
+		counter += 1;
+	}
+}
+
+function loadImages() {
+	var xhr = new XMLHttpRequest();
+	xhr.open("GET", 'https://api.github.com/repos/dpronin/pronind/contents/i', true);
+	xhr.onload = function (e) {
+		if (xhr.readyState === 4) {
+			if (xhr.status === 200) {
+				var json = JSON.parse(xhr.responseText);
+				images = json.filter((e) => e.type === "file").map((e) => { return { p: e.html_url, f: e.html_url.replace("/i/", "/i/f") } })
+				console.log(json);
+				addTiles();
+			} else {
+				console.error(xhr.statusText);
+			}
+		}
+	};
+	xhr.send(null);
+}
+
 var sqaures = [`<svg type="link" url="https://github.com/dpronin" width="100%" height="100%"
 viewBox="0 0 72 72" version="1.1">
 <rect id="github" x="0" y="0" width="72" height="72" style="fill:none;" />
@@ -139,76 +213,4 @@ version="1.1">
 	<path
 		d="M54.72,62.934l0,-0.03c-0.16,0 -0.27,-0.08 -0.33,-0.24c-0.06,-0.16 -0.09,-0.32 -0.09,-0.48l0,-23.31c0,-0.16 0.03,-0.305 0.09,-0.435c0.06,-0.13 0.17,-0.195 0.33,-0.195l0,-0.03l-1.47,0l0,0.06c0.12,0 0.22,0.06 0.3,0.18c0.08,0.12 0.12,0.26 0.12,0.42l0,12.51c-0.16,-0.58 -0.365,-0.995 -0.615,-1.245c-0.25,-0.25 -0.535,-0.425 -0.855,-0.525c-0.32,-0.1 -0.665,-0.165 -1.035,-0.195c-0.37,-0.03 -0.755,-0.125 -1.155,-0.285c-0.6,-0.24 -1.1,-0.555 -1.5,-0.945c-0.4,-0.39 -0.6,-0.995 -0.6,-1.815c0,-0.68 0.19,-1.32 0.57,-1.92c0.22,-0.34 0.49,-0.6 0.81,-0.78c0.32,-0.18 0.65,-0.27 0.99,-0.27c0.4,0 0.73,0.135 0.99,0.405c0.26,0.27 0.44,0.595 0.54,0.975c0.1,0.38 0.095,0.755 -0.015,1.125c-0.11,0.37 -0.345,0.605 -0.705,0.705c-0.38,0.12 -0.695,0.1 -0.945,-0.06c-0.25,-0.16 -0.355,-0.41 -0.315,-0.75c0.02,-0.1 0.05,-0.22 0.09,-0.36c0.04,-0.14 0.12,-0.24 0.24,-0.3c-0.14,-0.08 -0.305,-0.06 -0.495,0.06c-0.19,0.12 -0.295,0.32 -0.315,0.6c0,0.24 0.055,0.445 0.165,0.615c0.11,0.17 0.255,0.295 0.435,0.375c0.18,0.08 0.38,0.12 0.6,0.12c0.22,0 0.43,-0.03 0.63,-0.09c0.32,-0.1 0.59,-0.31 0.81,-0.63c0.22,-0.32 0.33,-0.65 0.33,-0.99c0,-0.56 -0.205,-1.03 -0.615,-1.41c-0.41,-0.38 -0.895,-0.55 -1.455,-0.51c-0.68,0.04 -1.225,0.265 -1.635,0.675c-0.41,0.41 -0.665,0.935 -0.765,1.575l0,-6.66c0,-0.16 0.03,-0.305 0.09,-0.435c0.06,-0.13 0.17,-0.195 0.33,-0.195l0,-0.03l-1.47,0l0,0.06c0.14,0 0.245,0.06 0.315,0.18c0.07,0.12 0.105,0.26 0.105,0.42l0,23.31c0,0.16 -0.035,0.32 -0.105,0.48c-0.07,0.16 -0.175,0.24 -0.315,0.24l0,0.03l1.47,0l0,-0.03c-0.16,0 -0.27,-0.08 -0.33,-0.24c-0.06,-0.16 -0.09,-0.32 -0.09,-0.48l0,-14.85c0.1,0.46 0.33,0.87 0.69,1.23c0.36,0.36 0.77,0.63 1.23,0.81c0.46,0.18 0.925,0.335 1.395,0.465c0.47,0.13 0.89,0.305 1.26,0.525c0.37,0.22 0.67,0.52 0.9,0.9c0.23,0.38 0.345,0.9 0.345,1.56l0,9.36c0,0.16 -0.04,0.32 -0.12,0.48c-0.08,0.16 -0.18,0.24 -0.3,0.24l0,0.03l1.47,0Z" />
 </g>
-</svg>`];
-wall.addEventListener('click', (e) => tileClickHandler(e.target));
-var images = [];
-document.cookie = "AC-C=ac-c;expires=Fri, 31 Dec 9999 23:59:59 GMT;path=/;SameSite=Lax";
-loadImages();
-
-function tileClickHandler(tile) {
-	var type = tile.getAttribute('type');
-	switch (type) {
-		case "image":
-			openImage(tile.getAttribute('image'));
-			break;
-		case "link":
-			openLink(tile.getAttribute('url'));
-			break;
-		default:
-			console.log('not implemented');
-	}
-}
-
-function openImage(image) {
-	var overlay = document.createElement('div');
-	overlay.classList.add("overlay");
-	var img = new Image();
-	img.src = image;
-	overlay.appendChild(img);
-	img.classList.add("preview");
-	overlay.addEventListener('click', () => overlay.parentNode.removeChild(overlay));
-	document.body.appendChild(overlay);
-}
-
-function openLink(link) {
-	window.open(link);
-}
-
-function addTiles() {
-	var counter = 0;
-	images.forEach(i => {
-		var li = document.createElement("li");
-		li.classList.add("thumb");
-		if (counter % 3 == 0 && sqaures.length > 0) {
-			var div = document.createElement('div');
-			div.innerHTML = sqaures.pop().trim();
-			li.appendChild(div);
-		} else {
-			var img = new Image();
-			img.src = i.p;
-			img.setAttribute("type", "image");
-			img.setAttribute("image", i.f);
-			li.appendChild(img);
-		}
-		wall.appendChild(li);
-		counter += 1;
-	});
-}
-
-function loadImages() {
-	var xhr = new XMLHttpRequest();
-	xhr.open("GET", 'https://api.github.com/repos/dpronin/pronind/contents/i', true);
-	xhr.onload = function (e) {
-		if (xhr.readyState === 4) {
-			if (xhr.status === 200) {
-				var json = JSON.parse(xhr.responseText);
-				console.log(json);
-				images = json.filter((e) => e.type === "file").map((e) => {return {p:e.html_url, f :e.html_url.replace("/i/", "/i/f")}})
-				addTiles();
-			} else {
-				console.error(xhr.statusText);
-			}
-		}
-	};
-	xhr.send(null);
-}
+</svg>`]
