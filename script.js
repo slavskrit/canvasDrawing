@@ -197,13 +197,13 @@ function addTiles() {
 
 function loadImages() {
 	var xhr = new XMLHttpRequest();
-	xhr.open("GET", 'https://api.github.com/repos/dpronin/pronind/contents/i/p', true);
+	xhr.open("GET", 'https://api.github.com/repos/dpronin/pronind/contents/i', true);
 	xhr.onload = function (e) {
 		if (xhr.readyState === 4) {
 			if (xhr.status === 200) {
 				var json = JSON.parse(xhr.responseText);
 				console.log(json);
-				images = json.map((e) => { p: e.download_url.replace(".jpg", "s.jpg"), f: e.download_url } : {}).filter(value => Object.keys(value).length !== 0)
+				images = json.filter((e) => e.type === "file").map((e) => {return {p:e.html_url, f :e.html_url.replace("/i/", "/i/f")}})
 				addTiles();
 			} else {
 				console.error(xhr.statusText);
