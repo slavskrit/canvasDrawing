@@ -64,14 +64,17 @@ function loadImages() {
 				var json = JSON.parse(xhr.responseText);
 				images = json.filter((e) => e.type === "file").map((e) => { return { p: e.download_url, f: e.download_url.replace("/i/", "/i/f/") } })
 				console.log(json);
-				addTiles();
 			} else {
-				var error = document.createElement('div');
-				error.innerText = 'error';
-				error.classList.add("error");
-				wall.appendChild(error);
+				var li = document.createElement("li");
+				li.classList.add("thumb");
+				var div = document.createElement('div');
+				div.innerHTML = 'could not load images';
+				li.appendChild(div);
+				wall.appendChild(li);
 			}
 		}
+		addTiles();
+
 	};
 	xhr.send(null);
 }
