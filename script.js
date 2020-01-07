@@ -66,7 +66,10 @@ function loadImages() {
 				console.log(json);
 				addTiles();
 			} else {
-				console.error(xhr.statusText);
+				var error = document.createElement('div');
+				error.innerText = 'error';
+				error.classList.add("error");
+				wall.appendChild(error);
 			}
 		}
 	};

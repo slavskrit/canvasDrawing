@@ -1,5 +1,6 @@
 body {
 	margin: 0;
+	background-color: black;
 }
 
 #wall {
@@ -7,6 +8,10 @@ body {
 	padding: 0;
 	margin: 0;
 	width: 100vw;
+}
+
+.error {
+	color: white;
 }
 
 .thumb {
