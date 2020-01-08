@@ -4,6 +4,7 @@ var images = [];
 document.cookie = "AC-C=ac-c;expires=Fri, 31 Dec 9999 23:59:59 GMT;path=/;SameSite=Lax";
 loadImages();
 var isMobile = mobilecheck();
+var skip = isMobile ? 2 : 3;
 
 function mobilecheck () {
 	var check = false;
@@ -45,7 +46,7 @@ function addTiles() {
 	while (images.length > 0 || svgs.length > 0) {
 		var li = document.createElement("li");
 		li.classList.add("thumb");
-		if ((counter % 3 == 0 || images.length == 0) && svgs.length > 0) {
+		if ((counter % skip == 0 || images.length == 0) && svgs.length > 0) {
 			var div = document.createElement('div');
 			div.classList.add("notransition");
 			div.innerHTML = svgs.pop().trim();
@@ -65,12 +66,12 @@ function addTiles() {
 
 function loadImages() {
 	var xhr = new XMLHttpRequest();
-	xhr.open("GET", 'https://api.github.com/repos/dpronin/pronind/contents/i', true);
+	xhr.open("GET", 'https://api.github.com/repos/dpronin/pronind/contents/i/p', true);
 	xhr.onload = function (e) {
 		if (xhr.readyState === 4) {
 			if (xhr.status === 200) {
 				var json = JSON.parse(xhr.responseText);
-				images = json.filter((e) => e.type === "file").map((e) => { return { p: e.download_url, f: e.download_url.replace("/i/", "/i/f/") } })
+				images = json.filter((e) => e.type === "file").map((e) => { return { p: e.download_url, f: e.download_url.replace("/i/p", "/i/m/") } })
 			} else {
 				var li = document.createElement("li");
 				li.classList.add("thumb");

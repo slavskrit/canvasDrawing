@@ -37,7 +37,7 @@ body {
 	font-size: 2em;
 }
 
-.thumb:hover {
+.thumb:hover, .thumb:active {
 	filter: grayscale(0%);
 }
 
@@ -46,7 +46,6 @@ path, circle {
 	stroke: #fff;
 	stroke-width: 0.5px;
 	stroke-dasharray: 500;
-	/* animation: dash 10s ease-in-out infinite; */
 }
 
 .overlay {
