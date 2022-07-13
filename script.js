@@ -18,7 +18,7 @@ const refractionCube = new THREE.CubeTextureLoader().load(urls);
 refractionCube.mapping = THREE.CubeRefractionMapping;
 
 const scene = new THREE.Scene();
-// scene.background = reflectionCube;
+scene.background = reflectionCube;
 const camera = new THREE.PerspectiveCamera(
   75,
   window.innerWidth / window.innerHeight,
