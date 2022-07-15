@@ -28,27 +28,10 @@ pointLight3.position.z = 1000;
 scene.add(pointLight3);
 
 const loader = new THREE.GLTFLoader();
-const parts = {};
-let partsNumber = 0;
 loader.load(
   "planet.glb",
   function (gltf) {
     scene.add(gltf.scene);
-    gltf.scene.children.forEach(function (mesh, index) {
-      if (mesh.isMesh) {
-        mesh.material.color = 0x000000;
-        mesh.material.roughness = 0.2;
-        parts[index] = {
-          "mesh": mesh,
-          "vector": new THREE.Vector3(
-            Math.random() - 0.5,
-            Math.random() - 0.5,
-            Math.random() - 0.5,
-          ),
-        };
-      }
-    });
-    partsNumber = gltf.scene.children.length;
   },
   undefined,
   function (error) {
@@ -58,14 +41,11 @@ loader.load(
 
 scene.add(pointLight);
 renderer.setSize(window.innerWidth, window.innerHeight);
-camera.position.z = 3;
+camera.position.z = 5;
+camera.position.y = 2;
 
 function animate() {
-  if (partsNumber > 0) {
-    for (let i = 0; i < partsNumber; i++) {
-      parts[i].mesh.rotateOnAxis(parts[i].vector, SPEED);
-    }
-  }
+  scene.rotation.y += 0.005;
   mControls.update();
   requestAnimationFrame(animate);
   renderer.render(scene, camera);
