@@ -1,5 +1,6 @@
 body {
-	margin: 0;
+	/* margin: 1em; */
+	/* padding: 1em; */
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -7,8 +8,7 @@ body {
 }
 
 #canvas {
-	padding: 1em;
-	width: 500px;
-  height: 500px;
+	width: min(90vw, 90vh);
+  height: min(90vw, 90vh);
   box-shadow: 2px 2px 10px #959595;
 }
