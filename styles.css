@@ -1,6 +1,13 @@
 body {
 	margin: 0;
-	background-color: black;
-	height: 100%;
-	overflow: auto;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 100vh;
+}
+
+#canvas {
+	width: 500px;
+  height: 500px;
+  box-shadow: 2px 2px 10px #959595;
 }

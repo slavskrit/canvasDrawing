@@ -1,2 +1,2 @@
 # pronind
-my site
+[Here](https://slavskrit.github.io/pronind/)
