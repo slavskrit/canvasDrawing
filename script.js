@@ -1,7 +1,7 @@
 "use strict";
 
 const c = document.getElementById("canvas");
-const w = 500, h = 500, pointsCount = 5000;
+const w = 500, h = 500, pointsCount = 1000;
 c.width = w;
 c.height = h;
 const ctx = c.getContext("2d");
@@ -19,22 +19,30 @@ function draw(c, n) {
   ctx.beginPath();
   ctx.lineTo(c[0], c[1]);
   ctx.lineTo(n[0], n[1]);
-  ctx.globalAlpha = getRandom(0, 100) / 100;
+  ctx.globalAlpha = 0.1;
   ctx.stroke();
 }
 
 let index = 0;
 let current = [0, 0];
+render();
 function render() {
-  window.requestAnimationFrame(render);
   const next = points[index + 1];
   draw(current, next);
   current = next;
   index += 2;
-  if (index == pointsCount) {
-    index = 0;
-    ctx.clearRect(0, 0, w, h);
+  if (index >= pointsCount) {
+    const imgd = ctx.getImageData(0, 0, w, h);
+    const pix = imgd.data;
+    const imgData = ctx.createImageData(w, h);
+    for (let i = 0; i < imgData.data.length; i += 4) {
+      imgData.data[i + 0] = 0;
+      imgData.data[i + 1] = 0;
+      imgData.data[i + 2] = 0;
+      imgData.data[i + 3] = pix[i + 3] > getRandom(20, 50) ? 255 : 0;
+    }
+    ctx.putImageData(imgData, 0, 0);
+    return;
   }
+  window.requestAnimationFrame(render);
 }
-
-render();
